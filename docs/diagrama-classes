@@ -1,0 +1,217 @@
+classDiagram
+    direction TB
+
+    %% ===================== Personagens (dominio) =====================
+    class Personagem {
+        <<abstract>>
+        -String nome
+        -int vidaMaxima
+        -int vida
+        -int ataque
+        -int defesa
+        -boolean defendendo
+        +atacar(Personagem alvo) int
+        +defender() void
+        +receberDano(int dano) int
+        +curar(int quantidade) int
+        +estaVivo() boolean
+    }
+
+    class Guardiao {
+        <<abstract>>
+        -int recurso
+        -int recursoMaximo
+        -int custoHabilidade
+        +usarHabilidade(Personagem alvo) String
+        #aplicarHabilidade(Personagem alvo)* String
+        +podeUsarHabilidade() boolean
+        +recuperarRecurso() void
+        +getNomeClasse()* String
+        +getNomeRecurso()* String
+    }
+
+    class Guerreiro {
+        Vida 110 · Ataque 12 · Defesa 5
+        Energia 30 · custo 10
+        #aplicarHabilidade(Personagem alvo) String
+    }
+    class Arqueiro {
+        Vida 100 · Ataque 15 · Defesa 3
+        Flechas 6 · custo 2
+        #aplicarHabilidade(Personagem alvo) String
+    }
+    class Mago {
+        Vida 90 · Ataque 8 · Defesa 2
+        Mana 45 · custo 15
+        #aplicarHabilidade(Personagem alvo) String
+    }
+
+    class Inimigo {
+        <<abstract>>
+        +agir(Guardiao jogador)* String
+        +getTipo()* String
+    }
+
+    class Goblin {
+        Vida 40 · Ataque 8 · Defesa 1
+        +agir(Guardiao jogador) String
+    }
+    class Orc {
+        Vida 75 · Ataque 15 · Defesa 4
+        -int turnosAgidos
+        +agir(Guardiao jogador) String
+    }
+    class Feiticeiro {
+        Vida 110 · Ataque 18 · Defesa 3
+        -boolean jaSeCurou
+        +agir(Guardiao jogador) String
+    }
+
+    Personagem <|-- Guardiao
+    Personagem <|-- Inimigo
+    Guardiao <|-- Guerreiro
+    Guardiao <|-- Arqueiro
+    Guardiao <|-- Mago
+    Inimigo <|-- Goblin
+    Inimigo <|-- Orc
+    Inimigo <|-- Feiticeiro
+
+    %% ===================== Partida (dominio) =====================
+    class Partida {
+        -Guardiao jogador
+        -Inimigo inimigo
+        -Inventario inventario
+        -int encontroAtual
+        -int turnoEncontro
+        -int turnoTotal
+        -int descansosUsados
+        -ResultadoPartida resultado
+        -boolean aguardandoProximoEncontro
+        -List~String~ historico
+        +executarRodada(TipoAcao acao) void
+        +usarPocaoEntreEncontros() void
+        +descansar() void
+        +avancarEncontro() void
+        +getPontuacao() int
+        +isEncerrada() boolean
+    }
+
+    class Inventario {
+        -int pocoes
+        +usarPocao(Personagem alvo) int
+        +adicionarPocao() void
+        +temPocao() boolean
+    }
+
+    class CalculadoraPontuacao {
+        <<utility>>
+        +calcular(...)$ int
+    }
+
+    class FabricaPersonagens {
+        <<utility>>
+        +criarGuardiao(String classe, String nome)$ Guardiao
+        +criarInimigoDoEncontro(int encontro)$ Inimigo
+        +criarInimigoPorTipo(String tipo)$ Inimigo
+    }
+
+    class TipoAcao {
+        <<enumeration>>
+        ATACAR
+        DEFENDER
+        HABILIDADE
+        POCAO
+    }
+
+    class ResultadoPartida {
+        <<enumeration>>
+        EM_ANDAMENTO
+        VITORIA
+        DERROTA
+    }
+
+    class AcaoInvalidaException {
+        +AcaoInvalidaException(String mensagem)
+    }
+
+    Partida "1" --> "1" Guardiao : jogador
+    Partida "1" --> "1" Inimigo : inimigo
+    Partida "1" *-- "1" Inventario : inventario
+    Partida ..> CalculadoraPontuacao : usa
+    Partida ..> FabricaPersonagens : cria inimigos
+    Partida ..> TipoAcao
+    Partida --> ResultadoPartida : resultado
+    Partida ..> AcaoInvalidaException : lança
+    Guardiao ..> AcaoInvalidaException : lança
+    Inventario ..> AcaoInvalidaException : lança
+
+    %% ===================== Ranking (dominio) =====================
+    class Ranking {
+        -List~RegistroRanking~ registros
+        +adicionar(RegistroRanking registro) void
+        +getOrdenado() List~RegistroRanking~
+    }
+
+    class RegistroRanking {
+        -String nome
+        -String classe
+        -int pontuacao
+        -ResultadoPartida resultado
+        -int turnos
+        -LocalDateTime data
+        +compareTo(RegistroRanking outro) int
+    }
+
+    Ranking "1" *-- "0..*" RegistroRanking : registros
+    RegistroRanking ..> Partida : criado a partir de
+
+    %% ===================== Persistência =====================
+    class ConfiguracaoDados {
+        -Path pastaDados
+        +definirPasta(Path pasta) void
+        +getArquivoSalvamento() Path
+        +getArquivoRanking() Path
+    }
+
+    class RepositorioPartida {
+        -ConfiguracaoDados configuracao
+        +salvar(Partida partida) void
+        +carregar() Partida
+    }
+
+    class RepositorioRanking {
+        -ConfiguracaoDados configuracao
+        +carregar() Ranking
+        +registrar(RegistroRanking registro) void
+    }
+
+    class PersistenciaException {
+        +PersistenciaException(String mensagem, Throwable causa)
+    }
+
+    RepositorioPartida --> ConfiguracaoDados : configuracao
+    RepositorioRanking --> ConfiguracaoDados : configuracao
+    RepositorioPartida ..> Partida : salva / carrega
+    RepositorioRanking ..> Ranking : salva / carrega
+    RepositorioPartida ..> PersistenciaException : lança
+    RepositorioRanking ..> PersistenciaException : lança
+
+    %% ===================== Interface (simplificada) =====================
+    class Main
+    class JanelaPrincipal {
+        -TelaInicio telaInicio
+        -TelaCombate telaCombate
+    }
+    class TelaInicio
+    class TelaCombate {
+        -Partida partida
+    }
+    class TelaRanking
+
+    Main ..> JanelaPrincipal : cria
+    JanelaPrincipal *-- TelaInicio : telaInicio
+    JanelaPrincipal *-- TelaCombate : telaCombate
+    JanelaPrincipal ..> TelaRanking : abre
+    TelaCombate --> Partida : partida
+    TelaCombate ..> RepositorioPartida
+    TelaCombate ..> RepositorioRanking

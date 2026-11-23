@@ -1,0 +1,12 @@
+package guardioes;
+
+import guardioes.ui.TelaInicio;
+
+import javax.swing.SwingUtilities;
+
+public class Main {
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new TelaInicio().setVisible(true));
+    }
+}
