@@ -17,7 +17,9 @@ public abstract class Personagem {
         this.defendendo = false;
     }
 
-    /** Retorna dano que ira ser recebido pelo alvo */
+    /**
+     * Retorna dano que ira ser recebido pelo alvo
+     */
     public int atacar(Personagem alvo) {
         return alvo.receberDano(ataque);
     }
@@ -26,23 +28,33 @@ public abstract class Personagem {
         defendendo = true;
     }
 
-    /** Aplica o golpe com base na defesa e retorna o dano realmente perdido. */
+    /**
+     * Aplica o golpe com base na defesa e retorna o dano realmente perdido.
+     */
     public int receberDano(int dano) {
-        int danoFinal = dano - defesa;
+        return receberDanoDireto(dano - defesa); //reutiliza função do dano direto, apenas desconta o atributo de defesa
+    }
 
+
+    /**
+     * Ignora o atributo de defesa
+     */
+    public int receberDanoDireto(int dano) {
+        int danoFinal = dano;
         if (defendendo) {
             danoFinal = danoFinal / 2;
-            defendendo = false; // defesa gasta neste golpe
+            defendendo = false;
         }
-
         danoFinal = Math.max(1, danoFinal);
-        danoFinal = Math.min(danoFinal, vida);    // não perde mais vida do que tem
+        danoFinal = Math.min(danoFinal, vida);
 
         vida -= danoFinal;
         return danoFinal;
     }
 
-    /** Cura até o limite da vida máxima e retorna quanto foi curado de fato. */
+    /**
+     * Cura até o limite da vida máxima e retorna quanto foi curado de fato.
+     */
     public int curar(int quantidade) {
         int vidaAnterior = vida;
         vida = Math.min(vidaMaxima, vida + quantidade);
