@@ -13,6 +13,23 @@ Baseado no `docs/diagrama-classes.mmd`.
 - [x] `Goblin`
 - [x] `Orc`
 - [x] `Feiticeiro`
+- [x] Validações: nome, cura negativa, personagem derrotado não age, habilidade em alvo derrotado
+- [ ] Encerrar a defesa no fim da rodada
+- [ ] Restaurar estado salvo (vida, recurso, defendendo, turnosAgidos, jaSeCurou)
+
+## dominio.enums
+
+- [x] `TipoAcao` (enum: ATACAR, DEFENDER, HABILIDADE, POCAO)
+- [x] `ResultadoPartida` (enum: EM_ANDAMENTO, VITORIA, DERROTA)
+- [x] `TipoGuardiao` (enum: ARQUEIRO, GUERREIRO, MAGO)
+- [x] `TipoInimigo` (enum: FEITICEIRO, GOBLIN, ORC)
+
+## dominio.utils
+
+- [x] `FabricaPersonagens`
+    - [x] `criarGuardiao(TipoGuardiao tipo, String nome)`
+    - [x] `criarInimigoDoEncontro(int encontro)`
+    - [x] `criarInimigoPorTipo(TipoInimigo tipo)`
 
 ## dominio.partida
 
@@ -24,13 +41,7 @@ Baseado no `docs/diagrama-classes.mmd`.
     - [ ] `avancarEncontro()`
     - [ ] `getPontuacao()`
     - [ ] `isEncerrada()`
-- [ ] `TipoAcao` (enum: ATACAR, DEFENDER, HABILIDADE, POCAO)
-- [x] `ResultadoPartida` (enum: EM_ANDAMENTO, VITORIA, DERROTA)
 - [x] `CalculadoraPontuacao`
-- [ ] `FabricaPersonagens`
-    - [ ] `criarGuardiao(String classe, String nome)`
-    - [ ] `criarInimigoDoEncontro(int encontro)`
-    - [ ] `criarInimigoPorTipo(String tipo)`
 
 ## dominio.item
 

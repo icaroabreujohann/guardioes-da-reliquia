@@ -1,5 +1,7 @@
 package dominio.partida;
 
+import dominio.enums.ResultadoPartida;
+
 /**
  * Faz a conta dos pontos no fim da partida.
  */

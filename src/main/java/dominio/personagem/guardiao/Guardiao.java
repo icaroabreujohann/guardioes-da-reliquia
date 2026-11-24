@@ -1,6 +1,7 @@
 package dominio.personagem.guardiao;
 
 
+import dominio.enums.TipoGuardiao;
 import dominio.exceptions.AcaoInvalidaException;
 import dominio.personagem.Personagem;
 
@@ -21,6 +22,10 @@ public abstract class Guardiao extends Personagem {
      * Gasta o recurso e aplica a habilidade da classe. Retorna a mensagem do que aconteceu.
      */
     public String usarHabilidade(Personagem alvo) throws AcaoInvalidaException {
+        exigirVivo();
+        if (!alvo.estaVivo()) {
+            throw new AcaoInvalidaException(alvo.getNome() + " já foi derrotado.");
+        }
         if (!podeUsarHabilidade()) {
             throw new AcaoInvalidaException(getNomeRecurso() + " insuficiente para " + getNomeHabilidade() + ".");
         }
@@ -42,7 +47,7 @@ public abstract class Guardiao extends Personagem {
         recurso = recursoMaximo;
     }
 
-    public abstract String getNomeClasse();
+    public abstract TipoGuardiao getTipo();
 
     public abstract String getNomeRecurso();
 

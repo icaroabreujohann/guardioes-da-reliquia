@@ -1,5 +1,7 @@
 package dominio.personagem;
 
+import dominio.exceptions.AcaoInvalidaException;
+
 public abstract class Personagem {
     private final String nome;
     private final int vidaMaxima;
@@ -9,7 +11,7 @@ public abstract class Personagem {
     private boolean defendendo;
 
     protected Personagem(String nome, int vidaMaxima, int ataque, int defesa) {
-        this.nome = nome;
+        this.nome = validarNome(nome);
         this.vidaMaxima = vidaMaxima;
         this.vida = vidaMaxima;
         this.ataque = ataque;
@@ -21,10 +23,12 @@ public abstract class Personagem {
      * Retorna dano que ira ser recebido pelo alvo
      */
     public int atacar(Personagem alvo) {
+        exigirVivo();
         return alvo.receberDano(ataque);
     }
 
     public void defender() {
+        exigirVivo();
         defendendo = true;
     }
 
@@ -56,15 +60,31 @@ public abstract class Personagem {
      * Cura até o limite da vida máxima e retorna quanto foi curado de fato.
      */
     public int curar(int quantidade) {
-        int vidaAnterior = vida;
-        vida = Math.min(vidaMaxima, vida + quantidade);
-        return vida - vidaAnterior;
+        if (quantidade < 0) {
+            throw new IllegalArgumentException("Quantidade de cura inválida: " + quantidade);
+        }
+        exigirVivo();
+        int curado = Math.min(quantidade, vidaMaxima - vida);
+        vida += curado;
+        return curado;
     }
 
     public boolean estaVivo() {
         return vida > 0;
     }
 
+    protected void exigirVivo() {
+        if (!estaVivo()) {
+            throw new AcaoInvalidaException(nome + " foi derrotado e não pode agir.");
+        }
+    }
+
+    private static String validarNome(String nome) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("O nome do personagem não pode ser vazio.");
+        }
+        return nome;
+    }
 
     public String getNome() {
         return nome;

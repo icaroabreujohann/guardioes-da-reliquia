@@ -1,9 +1,9 @@
 package dominio.personagem.inimigo;
 
+import dominio.enums.TipoInimigo;
 import dominio.personagem.guardiao.Guardiao;
 
 public class Feiticeiro extends Inimigo {
-    private static final String NOME = "Feiticeiro";
     private static final int VIDA_MAXIMA = 110;
     private static final int ATAQUE = 18;
     private static final int DEFESA = 3;
@@ -13,11 +13,11 @@ public class Feiticeiro extends Inimigo {
     private boolean jaSeCurou;
 
     public Feiticeiro() {
-        super(NOME, VIDA_MAXIMA, ATAQUE, DEFESA);
+        super(TipoInimigo.FEITICEIRO.getDescricao(), VIDA_MAXIMA, ATAQUE, DEFESA);
     }
 
     @Override
-    public String agir(Guardiao jogador) {
+    protected String executarAcao(Guardiao jogador) {
         if (!jaSeCurou && estaComVidaBaixa()) {
             return seCurar();
         }
@@ -35,7 +35,7 @@ public class Feiticeiro extends Inimigo {
     }
 
     @Override
-    public String getNomeInimigo() {
-        return NOME;
+    public TipoInimigo getTipo() {
+        return TipoInimigo.FEITICEIRO;
     }
 }

@@ -1,5 +1,6 @@
 package dominio.personagem.guardiao;
 
+import dominio.enums.TipoGuardiao;
 import dominio.personagem.Personagem;
 
 public class Guerreiro extends Guardiao {
@@ -19,8 +20,8 @@ public class Guerreiro extends Guardiao {
     }
 
     @Override
-    public String getNomeClasse() {
-        return "Guerreiro";
+    public TipoGuardiao getTipo() {
+        return TipoGuardiao.GUERREIRO;
     }
 
     @Override

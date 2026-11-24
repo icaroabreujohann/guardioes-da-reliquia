@@ -1,9 +1,9 @@
 package dominio.personagem.inimigo;
 
+import dominio.enums.TipoInimigo;
 import dominio.personagem.guardiao.Guardiao;
 
 public class Orc extends Inimigo {
-    private static final String NOME = "Orc";
     private static final int VIDA_MAXIMA = 75;
     private static final int ATAQUE = 15;
     private static final int DEFESA = 4;
@@ -12,11 +12,11 @@ public class Orc extends Inimigo {
     private int turnosAgidos;
 
     public Orc() {
-        super(NOME, VIDA_MAXIMA, ATAQUE, DEFESA);
+        super(TipoInimigo.ORC.getDescricao(), VIDA_MAXIMA, ATAQUE, DEFESA);
     }
 
     @Override
-    public String agir(Guardiao jogador) {
+    protected String executarAcao(Guardiao jogador) {
         turnosAgidos++;
         if (turnosAgidos % INTERVALO_GOLPE_FORTE == 0) {
             return usarGolpeForte(jogador);
@@ -30,7 +30,7 @@ public class Orc extends Inimigo {
     }
 
     @Override
-    public String getNomeInimigo() {
-        return NOME;
+    public TipoInimigo getTipo() {
+        return TipoInimigo.ORC;
     }
 }
