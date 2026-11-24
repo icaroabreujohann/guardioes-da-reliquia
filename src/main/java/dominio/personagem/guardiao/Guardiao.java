@@ -1,7 +1,8 @@
-package dominio.personagem;
+package dominio.personagem.guardiao;
 
 
 import dominio.exceptions.AcaoInvalidaException;
+import dominio.personagem.Personagem;
 
 public abstract class Guardiao extends Personagem {
     private final int recursoMaximo;

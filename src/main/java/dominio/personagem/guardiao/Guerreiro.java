@@ -1,4 +1,6 @@
-package dominio.personagem;
+package dominio.personagem.guardiao;
+
+import dominio.personagem.Personagem;
 
 public class Guerreiro extends Guardiao {
     private static final int VIDA_MAXIMA = 110;
