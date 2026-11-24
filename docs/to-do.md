@@ -49,12 +49,12 @@ Baseado no `docs/diagrama-classes.mmd`.
 
 ## dominio.ranking
 
-- [ ] `RegistroRanking`
-    - [ ] Atributos: nome, classe, pontuação, resultado, turnos, data
-    - [ ] `compareTo(RegistroRanking outro)`
-- [ ] `Ranking`
-    - [ ] `adicionar(RegistroRanking registro)`
-    - [ ] `getOrdenado()`
+- [x] `RegistroRanking`
+    - [x] Atributos: nome, classe, pontuação, resultado, turnos, data
+    - [x] `vemAntes(RegistroRanking outro)`
+- [x] `Ranking`
+    - [x] `adicionar(RegistroRanking registro)`
+    - [x] `getOrdenado()`
 
 ## dominio.exceptions
 
