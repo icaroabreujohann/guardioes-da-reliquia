@@ -1,7 +1,7 @@
-package dominio.utils;
+package dominio.personagem;
 
-import dominio.enums.TipoGuardiao;
-import dominio.enums.TipoInimigo;
+import dominio.personagem.guardiao.TipoGuardiao;
+import dominio.personagem.inimigo.TipoInimigo;
 import dominio.personagem.guardiao.Arqueiro;
 import dominio.personagem.guardiao.Guardiao;
 import dominio.personagem.guardiao.Guerreiro;

@@ -1,6 +1,5 @@
 package dominio.partida;
 
-import dominio.enums.ResultadoPartida;
 
 public class CalculadoraPontuacao {
     private static final int PONTOS_POR_ENCONTRO = 100;

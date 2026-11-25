@@ -1,6 +1,5 @@
 package dominio.personagem.guardiao;
 
-import dominio.enums.TipoGuardiao;
 import dominio.personagem.Personagem;
 
 public class Guerreiro extends Guardiao {

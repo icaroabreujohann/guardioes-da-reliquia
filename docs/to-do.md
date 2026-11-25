@@ -2,6 +2,10 @@
 
 Baseado no `docs/diagrama-classes.mmd`.
 
+## dominio
+
+- [x] `AcaoInvalidaException`
+
 ## dominio.personagem
 
 - [x] `Personagem` (abstrata)
@@ -16,20 +20,18 @@ Baseado no `docs/diagrama-classes.mmd`.
 - [x] Validações: nome, cura negativa, personagem derrotado não age, habilidade em alvo derrotado
 - [ ] Encerrar a defesa no fim da rodada
 - [ ] Restaurar estado salvo (vida, recurso, defendendo, turnosAgidos, jaSeCurou)
-
-## dominio.enums
-
-- [x] `TipoAcao` (enum: ATACAR, DEFENDER, HABILIDADE, POCAO)
-- [x] `ResultadoPartida` (enum: EM_ANDAMENTO, VITORIA, DERROTA)
-- [x] `TipoGuardiao` (enum: ARQUEIRO, GUERREIRO, MAGO)
-- [x] `TipoInimigo` (enum: FEITICEIRO, GOBLIN, ORC)
-
-## dominio.utils
-
 - [x] `FabricaPersonagens`
     - [x] `criarGuardiao(TipoGuardiao tipo, String nome)`
     - [x] `criarInimigoDoEncontro(int encontro)`
     - [x] `criarInimigoPorTipo(TipoInimigo tipo)`
+
+## dominio.personagem.guardiao
+
+- [x] `TipoGuardiao` (enum: ARQUEIRO, GUERREIRO, MAGO)
+
+## dominio.personagem.inimigo
+
+- [x] `TipoInimigo` (enum: FEITICEIRO, GOBLIN, ORC)
 
 ## dominio.partida
 
@@ -42,6 +44,8 @@ Baseado no `docs/diagrama-classes.mmd`.
     - [ ] `getPontuacao()`
     - [ ] `isEncerrada()`
 - [x] `CalculadoraPontuacao`
+- [x] `TipoAcao` (enum: ATACAR, DEFENDER, HABILIDADE, POCAO)
+- [x] `ResultadoPartida` (enum: EM_ANDAMENTO, VITORIA, DERROTA)
 
 ## dominio.item
 
@@ -55,10 +59,6 @@ Baseado no `docs/diagrama-classes.mmd`.
 - [x] `Ranking`
     - [x] `adicionar(RegistroRanking registro)`
     - [x] `getOrdenado()`
-
-## dominio.exceptions
-
-- [x] `AcaoInvalidaException`
 
 ## persistencia
 

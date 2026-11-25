@@ -1,8 +1,7 @@
 package dominio.personagem.guardiao;
 
 
-import dominio.enums.TipoGuardiao;
-import dominio.exceptions.AcaoInvalidaException;
+import dominio.AcaoInvalidaException;
 import dominio.personagem.Personagem;
 
 public abstract class Guardiao extends Personagem {

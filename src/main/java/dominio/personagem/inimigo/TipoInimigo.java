@@ -1,4 +1,4 @@
-package dominio.enums;
+package dominio.personagem.inimigo;
 
 public enum TipoInimigo {
     FEITICEIRO("Feiticeiro"),

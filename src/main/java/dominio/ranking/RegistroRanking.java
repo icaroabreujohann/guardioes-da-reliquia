@@ -1,7 +1,7 @@
 package dominio.ranking;
 
-import dominio.enums.ResultadoPartida;
-import dominio.enums.TipoGuardiao;
+import dominio.partida.ResultadoPartida;
+import dominio.personagem.guardiao.TipoGuardiao;
 
 import java.time.LocalDateTime;
 

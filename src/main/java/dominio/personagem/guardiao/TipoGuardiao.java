@@ -1,4 +1,4 @@
-package dominio.enums;
+package dominio.personagem.guardiao;
 
 public enum TipoGuardiao {
     ARQUEIRO("Arqueiro"),

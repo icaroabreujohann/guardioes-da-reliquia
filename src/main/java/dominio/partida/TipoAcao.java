@@ -1,4 +1,4 @@
-package dominio.enums;
+package dominio.partida;
 
 public enum TipoAcao {
     ATACAR,

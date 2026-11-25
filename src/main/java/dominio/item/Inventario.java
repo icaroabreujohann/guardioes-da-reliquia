@@ -1,6 +1,6 @@
 package dominio.item;
 
-import dominio.exceptions.AcaoInvalidaException;
+import dominio.AcaoInvalidaException;
 import dominio.personagem.Personagem;
 
 public class Inventario {

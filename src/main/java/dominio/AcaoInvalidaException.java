@@ -1,4 +1,4 @@
-package dominio.exceptions;
+package dominio;
 
 public class AcaoInvalidaException extends RuntimeException {
     public AcaoInvalidaException(String message) {

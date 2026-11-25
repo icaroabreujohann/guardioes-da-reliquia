@@ -1,6 +1,5 @@
 package dominio.personagem.inimigo;
 
-import dominio.enums.TipoInimigo;
 import dominio.personagem.guardiao.Guardiao;
 
 public class Orc extends Inimigo {

@@ -1,6 +1,6 @@
 package dominio.personagem;
 
-import dominio.exceptions.AcaoInvalidaException;
+import dominio.AcaoInvalidaException;
 
 public abstract class Personagem {
     private final String nome;
