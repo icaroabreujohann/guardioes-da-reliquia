@@ -136,6 +136,8 @@ public class Partida {
             resultado = ResultadoPartida.VITORIA;
             historico.add(jogador.getNome() + " recuperou a relíquia!");
         } else {
+            inventario.adicionarPocao(); // só os encontros 1 e 2 caem aqui, que são os que dão a poção extra
+            historico.add(jogador.getNome() + " encontrou uma poção.");
             aguardandoProximoEncontro = true;
         }
     }
