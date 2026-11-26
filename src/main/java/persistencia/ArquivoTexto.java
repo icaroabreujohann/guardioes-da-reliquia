@@ -47,4 +47,12 @@ class ArquivoTexto { // sem public porque só os repositórios deste pacote usam
             throw new PersistenciaException("Não foi possível gravar o arquivo " + arquivo + ".", e);
         }
     }
+
+    void apagar() throws PersistenciaException {
+        try {
+            Files.deleteIfExists(arquivo); // não reclama se o arquivo não existe
+        } catch (IOException e) {
+            throw new PersistenciaException("Não foi possível apagar o arquivo " + arquivo + ".", e);
+        }
+    }
 }

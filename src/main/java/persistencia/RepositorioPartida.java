@@ -8,8 +8,6 @@ import dominio.personagem.guardiao.TipoGuardiao;
 import dominio.personagem.inimigo.Inimigo;
 import dominio.personagem.inimigo.TipoInimigo;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,11 +47,7 @@ public class RepositorioPartida {
     }
 
     public void apagarSalvamento() throws PersistenciaException { // chamado quando a partida termina, para não dar para carregar e refazer o final
-        try {
-            Files.deleteIfExists(configuracao.getArquivoSalvamento()); // não reclama se o jogador nunca salvou
-        } catch (IOException e) {
-            throw new PersistenciaException("Não foi possível apagar o salvamento em " + configuracao.getPastaDados() + ".", e);
-        }
+        new ArquivoTexto(configuracao.getArquivoSalvamento()).apagar();
     }
 
     public void salvar(Partida partida) throws PersistenciaException {
