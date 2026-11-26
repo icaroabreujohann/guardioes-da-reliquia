@@ -19,7 +19,7 @@ Baseado no `docs/diagrama-classes.mmd`.
 - [x] `Feiticeiro`
 - [x] Validações: nome, cura negativa, personagem derrotado não age, habilidade em alvo derrotado
 - [ ] Encerrar a defesa no fim da rodada
-- [ ] Restaurar estado salvo (vida, recurso, defendendo, turnosAgidos, jaSeCurou)
+- [x] Restaurar estado salvo (vida, recurso, defendendo, turnosAgidos, jaSeCurou)
 - [x] `FabricaPersonagens`
     - [x] `criarGuardiao(TipoGuardiao tipo, String nome)`
     - [x] `criarInimigoDoEncontro(int encontro)`
@@ -35,14 +35,15 @@ Baseado no `docs/diagrama-classes.mmd`.
 
 ## dominio.partida
 
-- [ ] `Partida`
-    - [ ] Atributos: jogador, inimigo, inventário, encontroAtual, turnoEncontro, turnoTotal, descansosUsados, resultado, aguardandoProximoEncontro, histórico
-    - [ ] `executarRodada(TipoAcao acao)`
-    - [ ] `usarPocaoEntreEncontros()`
-    - [ ] `descansar()`
-    - [ ] `avancarEncontro()`
-    - [ ] `getPontuacao()`
-    - [ ] `isEncerrada()`
+- [x] `Partida`
+    - [x] Atributos: jogador, inimigo, inventário, encontroAtual, turnoEncontro, turnoTotal, descansosUsados, resultado, aguardandoProximoEncontro, histórico
+    - [x] `executarRodada(TipoAcao acao)`
+    - [x] `usarPocaoEntreEncontros()`
+    - [x] `descansar()`
+    - [x] `avancarEncontro()`
+    - [x] `getPontuacao()`
+    - [x] `isEncerrada()`
+    - [x] Construtor de restauração (confere inimigo do encontro, contadores, fase e poções)
 - [x] `CalculadoraPontuacao`
 - [x] `TipoAcao` (enum: ATACAR, DEFENDER, HABILIDADE, POCAO)
 - [x] `ResultadoPartida` (enum: EM_ANDAMENTO, VITORIA, DERROTA)
@@ -62,17 +63,20 @@ Baseado no `docs/diagrama-classes.mmd`.
 
 ## persistencia
 
-- [ ] `ConfiguracaoDados`
-    - [ ] `definirPasta(Path pasta)`
-    - [ ] `getArquivoSalvamento()`
-    - [ ] `getArquivoRanking()`
-- [ ] `RepositorioPartida`
-    - [ ] `salvar(Partida partida)`
-    - [ ] `carregar()`
-- [ ] `RepositorioRanking`
-    - [ ] `carregar()`
-    - [ ] `registrar(RegistroRanking registro)`
-- [ ] `PersistenciaException`
+- [x] `ConfiguracaoDados`
+    - [x] `definirPasta(Path pasta)`
+    - [x] `getArquivoSalvamento()`
+    - [x] `getArquivoRanking()`
+- [x] `RepositorioPartida`
+    - [x] `salvar(Partida partida)`
+    - [x] `carregar()`
+    - [x] `existeSalvamento()`
+    - [x] `apagarSalvamento()`
+- [x] `RepositorioRanking`
+    - [x] `carregar()`
+    - [x] `registrar(RegistroRanking registro)`
+- [x] `PersistenciaException`
+- [x] `ArquivoTexto` (leitura UTF-8 e gravação via `.tmp`, usada pelos dois repositórios)
 
 ## ui
 
