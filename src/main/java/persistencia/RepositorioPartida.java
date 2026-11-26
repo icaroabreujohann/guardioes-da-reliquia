@@ -45,7 +45,7 @@ public class RepositorioPartida {
     }
 
     public boolean existeSalvamento() {
-        return Files.exists(configuracao.getArquivoSalvamento());
+        return new ArquivoTexto(configuracao.getArquivoSalvamento()).existe();
     }
 
     public void apagarSalvamento() throws PersistenciaException { // chamado quando a partida termina, para não dar para carregar e refazer o final
@@ -83,19 +83,20 @@ public class RepositorioPartida {
         linhas.add(campo(VIDA_INIMIGO, inimigo.getVida()));
         linhas.add(campo(ESTADO_INIMIGO, inimigo.getEstadoEspecial()));
 
-        ArquivoTexto.gravarComTemporario(configuracao.getArquivoSalvamento(), linhas);
+        new ArquivoTexto(configuracao.getArquivoSalvamento()).gravarComTemporario(linhas);
     }
 
     public Partida carregar() throws PersistenciaException {
-        Path arquivo = configuracao.getArquivoSalvamento();
+        Path caminho = configuracao.getArquivoSalvamento();
+        ArquivoTexto arquivo = new ArquivoTexto(caminho); // cria na hora porque o usuário pode ter trocado a pasta
 
-        if (!Files.exists(arquivo))
+        if (!arquivo.existe())
             throw new PersistenciaException("Não há partida salva em " + configuracao.getPastaDados() + ".");
 
-        List<String> linhas = ArquivoTexto.lerLinhas(arquivo);
+        List<String> linhas = arquivo.lerLinhas();
 
         if (linhas.isEmpty() || !linhas.get(0).equals(CABECALHO))
-            throw new PersistenciaException("O arquivo de salvamento não está no formato esperado: " + arquivo);
+            throw new PersistenciaException("O arquivo de salvamento não está no formato esperado: " + caminho);
 
         Map<String, String> campos = separarCampos(linhas);
 

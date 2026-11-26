@@ -5,7 +5,6 @@ import dominio.personagem.guardiao.TipoGuardiao;
 import dominio.ranking.Ranking;
 import dominio.ranking.RegistroRanking;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -28,15 +27,16 @@ public class RepositorioRanking {
     }
 
     public Ranking carregar() throws PersistenciaException {
-        Path arquivo = configuracao.getArquivoRanking();
+        Path caminho = configuracao.getArquivoRanking();
+        ArquivoTexto arquivo = new ArquivoTexto(caminho); // cria na hora porque o usuário pode ter trocado a pasta
 
-        if (!Files.exists(arquivo))
+        if (!arquivo.existe())
             return new Ranking(); // na primeira vez ainda não há arquivo, e isso não é erro
 
-        List<String> linhas = ArquivoTexto.lerLinhas(arquivo);
+        List<String> linhas = arquivo.lerLinhas();
 
         if (linhas.isEmpty() || !linhas.get(0).equals(CABECALHO))
-            throw new PersistenciaException("O arquivo de ranking não está no formato esperado: " + arquivo);
+            throw new PersistenciaException("O arquivo de ranking não está no formato esperado: " + caminho);
 
         Ranking ranking = new Ranking(); // monta um ranking novo, então um arquivo ruim não estraga nada que já esteja em uso
         for (int i = 1; i < linhas.size(); i++)
@@ -60,7 +60,7 @@ public class RepositorioRanking {
         for (RegistroRanking registroOrdenado : ranking.getOrdenado())
             linhas.add(converterRegistro(registroOrdenado));
 
-        ArquivoTexto.gravarComTemporario(configuracao.getArquivoRanking(), linhas);
+        new ArquivoTexto(configuracao.getArquivoRanking()).gravarComTemporario(linhas);
     }
 
     private RegistroRanking converterLinha(String linha, int numeroLinha) throws PersistenciaException {

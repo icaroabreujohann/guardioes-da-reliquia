@@ -11,7 +11,20 @@ import java.util.List;
 class ArquivoTexto { // sem public porque só os repositórios deste pacote usam
     private static final String BOM = "﻿";
 
-    static List<String> lerLinhas(Path arquivo) throws PersistenciaException {
+    private final Path arquivo;
+
+    ArquivoTexto(Path arquivo) {
+        if (arquivo == null)
+            throw new IllegalArgumentException("O arquivo é obrigatório.");
+
+        this.arquivo = arquivo;
+    }
+
+    boolean existe() {
+        return Files.exists(arquivo);
+    }
+
+    List<String> lerLinhas() throws PersistenciaException {
         try {
             List<String> linhas = new ArrayList<>(Files.readAllLines(arquivo, StandardCharsets.UTF_8));
             if (!linhas.isEmpty() && linhas.get(0).startsWith(BOM)) // alguns editores do Windows põem esse caractere invisível no começo do arquivo
@@ -23,7 +36,7 @@ class ArquivoTexto { // sem public porque só os repositórios deste pacote usam
         }
     }
 
-    static void gravarComTemporario(Path arquivo, List<String> linhas) throws PersistenciaException {
+    void gravarComTemporario(List<String> linhas) throws PersistenciaException {
         Path temporario = arquivo.resolveSibling(arquivo.getFileName() + ".tmp");
 
         try {
