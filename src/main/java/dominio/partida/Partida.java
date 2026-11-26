@@ -37,6 +37,41 @@ public class Partida {
         registrarInicioDoEncontro();
     }
 
+    public Partida(Guardiao jogador, Inimigo inimigo, Inventario inventario, int encontroAtual, int turnoEncontro,
+                   int turnoTotal, int descansosUsados, boolean aguardandoProximoEncontro) { // usado ao carregar, por isso confere tudo antes de guardar
+        if (jogador == null || inimigo == null || inventario == null)
+            throw new IllegalArgumentException("Jogador, inimigo e inventário são obrigatórios.");
+
+        if (encontroAtual < 1 || encontroAtual > TOTAL_ENCONTROS)
+            throw new IllegalArgumentException("Encontro inválido: " + encontroAtual);
+
+        if (inimigo.getTipo() != FabricaPersonagens.criarInimigoDoEncontro(encontroAtual).getTipo())
+            throw new IllegalArgumentException(inimigo.getNome() + " não é o inimigo do encontro " + encontroAtual + ".");
+
+        if (turnoEncontro < 0 || turnoTotal < turnoEncontro || descansosUsados < 0)
+            throw new IllegalArgumentException("Contadores de turno ou descanso inválidos.");
+
+        if (!jogador.estaVivo())
+            throw new IllegalArgumentException("Partida encerrada não pode ser restaurada.");
+
+        if (aguardandoProximoEncontro == inimigo.estaVivo()) // entre encontros o inimigo tem que estar derrotado, e em combate vivo
+            throw new IllegalArgumentException("A vida do inimigo não combina com a fase da partida.");
+
+        if (aguardandoProximoEncontro && encontroAtual == TOTAL_ENCONTROS) // vencer o último encontro já é vitória
+            throw new IllegalArgumentException("Partida encerrada não pode ser restaurada.");
+
+        this.jogador = jogador;
+        this.inimigo = inimigo;
+        this.inventario = inventario;
+        this.encontroAtual = encontroAtual;
+        this.turnoEncontro = turnoEncontro;
+        this.turnoTotal = turnoTotal;
+        this.descansosUsados = descansosUsados;
+        this.resultado = ResultadoPartida.EM_ANDAMENTO;
+        this.aguardandoProximoEncontro = aguardandoProximoEncontro;
+        this.historico = new ArrayList<>();
+        historico.add("Partida carregada: encontro " + encontroAtual + ", turno " + turnoEncontro + ".");
+    }
 
     public void executarRodada(TipoAcao acao) {
         exigirEmCombate();

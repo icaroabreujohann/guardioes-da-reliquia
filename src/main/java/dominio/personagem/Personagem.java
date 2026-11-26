@@ -69,6 +69,14 @@ public abstract class Personagem {
         return curado;
     }
 
+    public void restaurarEstado(int vida, boolean defendendo) { // usado só ao carregar um jogo salvo
+        if (vida < 0 || vida > vidaMaxima)
+            throw new IllegalArgumentException("Vida inválida para " + nome + ": " + vida);
+
+        this.vida = vida;
+        this.defendendo = defendendo;
+    }
+
     public boolean estaVivo() {
         return vida > 0;
     }

@@ -20,4 +20,15 @@ public class Goblin extends Inimigo {
     public TipoInimigo getTipo() {
         return TipoInimigo.GOBLIN;
     }
+
+    @Override
+    public int getEstadoEspecial() {
+        return 0; // o Goblin não tem nada além da vida para guardar
+    }
+
+    @Override
+    public void restaurarEstadoEspecial(int valor) {
+        if (valor != 0)
+            throw new IllegalArgumentException("Estado especial inválido para o Goblin: " + valor);
+    }
 }

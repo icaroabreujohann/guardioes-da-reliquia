@@ -37,4 +37,17 @@ public class Feiticeiro extends Inimigo {
     public TipoInimigo getTipo() {
         return TipoInimigo.FEITICEIRO;
     }
+
+    @Override
+    public int getEstadoEspecial() {
+        return jaSeCurou ? 1 : 0; // guardado como número para todos os inimigos usarem o mesmo campo do arquivo
+    }
+
+    @Override
+    public void restaurarEstadoEspecial(int valor) {
+        if (valor != 0 && valor != 1)
+            throw new IllegalArgumentException("Estado especial inválido para o Feiticeiro: " + valor);
+
+        jaSeCurou = valor == 1;
+    }
 }

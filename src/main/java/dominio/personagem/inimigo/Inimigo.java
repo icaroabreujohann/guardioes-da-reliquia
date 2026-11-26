@@ -23,4 +23,8 @@ public abstract class Inimigo extends Personagem {
     }
 
     public abstract TipoInimigo getTipo();
+
+    public abstract int getEstadoEspecial(); // cada inimigo decide o que precisa guardar no salvamento, assim a persistência não precisa saber a classe
+
+    public abstract void restaurarEstadoEspecial(int valor);
 }

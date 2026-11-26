@@ -32,4 +32,17 @@ public class Orc extends Inimigo {
     public TipoInimigo getTipo() {
         return TipoInimigo.ORC;
     }
+
+    @Override
+    public int getEstadoEspecial() {
+        return turnosAgidos; // sem isso, o Golpe Forte sairia no turno errado depois de carregar
+    }
+
+    @Override
+    public void restaurarEstadoEspecial(int valor) {
+        if (valor < 0)
+            throw new IllegalArgumentException("Turnos do Orc inválidos: " + valor);
+
+        turnosAgidos = valor;
+    }
 }

@@ -46,6 +46,13 @@ public abstract class Guardiao extends Personagem {
         recurso = recursoMaximo;
     }
 
+    public void restaurarRecurso(int recurso) { // ao carregar volta o valor salvo, não o máximo, para não devolver recurso indevidamente
+        if (recurso < 0 || recurso > recursoMaximo)
+            throw new IllegalArgumentException("Quantidade de " + getNomeRecurso() + " inválida: " + recurso);
+
+        this.recurso = recurso;
+    }
+
     public abstract TipoGuardiao getTipo();
 
     public abstract String getNomeRecurso();
