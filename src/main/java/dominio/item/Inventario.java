@@ -42,4 +42,8 @@ public class Inventario {
     public int getPocoes() {
         return pocoes;
     }
+
+    public static int getPocoesIniciais() {
+        return POCOES_INICIAIS;
+    }
 }

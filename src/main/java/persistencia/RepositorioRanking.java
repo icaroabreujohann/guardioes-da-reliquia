@@ -5,11 +5,8 @@ import dominio.personagem.guardiao.TipoGuardiao;
 import dominio.ranking.Ranking;
 import dominio.ranking.RegistroRanking;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -36,7 +33,7 @@ public class RepositorioRanking {
         if (!Files.exists(arquivo))
             return new Ranking(); // na primeira vez ainda não há arquivo, e isso não é erro
 
-        List<String> linhas = lerLinhas(arquivo);
+        List<String> linhas = ArquivoTexto.lerLinhas(arquivo);
 
         if (linhas.isEmpty() || !linhas.get(0).equals(CABECALHO))
             throw new PersistenciaException("O arquivo de ranking não está no formato esperado: " + arquivo);
@@ -63,7 +60,7 @@ public class RepositorioRanking {
         for (RegistroRanking registroOrdenado : ranking.getOrdenado())
             linhas.add(converterRegistro(registroOrdenado));
 
-        gravarComTemporario(configuracao.getArquivoRanking(), linhas);
+        ArquivoTexto.gravarComTemporario(configuracao.getArquivoRanking(), linhas);
     }
 
     private RegistroRanking converterLinha(String linha, int numeroLinha) throws PersistenciaException {
@@ -85,25 +82,5 @@ public class RepositorioRanking {
         return String.join(SEPARADOR, registro.getNome(), registro.getClasse().name(), // grava o name() do enum, que é o que o valueOf sabe ler de volta
                 String.valueOf(registro.getPontuacao()), registro.getResultado().name(),
                 String.valueOf(registro.getTurnos()), registro.getData().truncatedTo(ChronoUnit.SECONDS).toString()); // sem as frações de segundo, que só poluem o arquivo
-    }
-
-    private List<String> lerLinhas(Path arquivo) throws PersistenciaException {
-        try {
-            return Files.readAllLines(arquivo, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new PersistenciaException("Não foi possível ler o arquivo " + arquivo + ".", e);
-        }
-    }
-
-    private void gravarComTemporario(Path arquivo, List<String> linhas) throws PersistenciaException {
-        Path temporario = arquivo.resolveSibling(arquivo.getFileName() + ".tmp");
-
-        try {
-            Files.createDirectories(configuracao.getPastaDados());
-            Files.write(temporario, linhas, StandardCharsets.UTF_8);
-            Files.move(temporario, arquivo, StandardCopyOption.REPLACE_EXISTING); // só troca o arquivo bom depois que o novo foi gravado inteiro
-        } catch (IOException e) {
-            throw new PersistenciaException("Não foi possível gravar o arquivo " + arquivo + ".", e);
-        }
     }
 }

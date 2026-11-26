@@ -60,6 +60,10 @@ public class Partida {
         if (aguardandoProximoEncontro && encontroAtual == TOTAL_ENCONTROS) // vencer o último encontro já é vitória
             throw new IllegalArgumentException("Partida encerrada não pode ser restaurada.");
 
+        int encontrosVencidos = aguardandoProximoEncontro ? encontroAtual : encontroAtual - 1; // mesma conta do getEncontrosVencidos, que ainda não pode ser chamado aqui
+        if (inventario.getPocoes() > Inventario.getPocoesIniciais() + encontrosVencidos) // cada encontro vencido dá só uma poção a mais
+            throw new IllegalArgumentException("Quantidade de poções maior do que o possível: " + inventario.getPocoes());
+
         this.jogador = jogador;
         this.inimigo = inimigo;
         this.inventario = inventario;
